@@ -1,0 +1,56 @@
+{%extends "/shared/layout.html" %}
+
+{% block title %}Books{% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    {% if books %}
+    <h4 class="mb-3">List of Books</h4>
+    <div class="row row-cols-4">
+        {% for book in books %}
+        <div class="col pb-2">
+            <div class="card" style="min-height: 250px; max-height: 300px;">
+                <div class="card-body">
+                    <h5 class="card-title">{{book.name}}</h5>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">~{{book.author}}</h6>
+                    <p class="card-text overflow-description">{{book.about}}</p>
+                    <p class="card-text">
+                        <span class="mb-1 badge rounded-pill text-bg-primary">
+                            Issue Date: {{book.formattedIssueDate}}
+                        </span>
+                    </p>
+                    <p class="card-text">
+                        {% if book.fineMultiplier > 0 %}
+                        <span class="mb-1 badge rounded-pill text-bg-danger" data-bs-toggle="tooltip"
+                            data-bs-placement="right" data-bs-custom-class="custom-tooltip" data-bs-html="true"
+                            data-bs-title="Number of days x <span class='rupee'>&#8377;</span>50">
+                            Fine amount: <span class='rupee'>&#8377;</span>{{book.fineMultiplier * 50}}
+                        </span>
+                        {% else %}
+                        <span class="mb-1 badge rounded-pill text-bg-success">
+                            No Fine till {{book.formattedFineDate}}
+                        </span>
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="/customer/books/{{book._id}}" class="card-link"><i class="bi bi-eye"></i> Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">No Books In Stash!</h5>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{%extends "/shared/admin_layout.html" %}
+
+{% block title %}Add Customer{% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+	{% if error %}
+	<div class="alert alert-danger alert-dismissible fade show" role="alert">
+		{{error}}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	{% endif %}
+	{% if msg %}
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+		{{msg}}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	{% endif %}
+	<div class="card">
+		<div class="card-header">
+			Add a new cutomer
+		</div>
+		<div class="card-body">
+			<form action="/admin/users/add" method="POST">
+				<div class="mb-3">
+					<label for="name" class="form-label">Customer Name</label>
+					<input type="text" class="form-control" id="name" name="name" placeholder="Enter Customer's Name"
+						required>
+				</div>
+				<div class="mb-3">
+					<label for="name" class="form-label">Customer Email</label>
+					<input type="email" class="form-control" id="email" name="email"
+						placeholder="Enter Customer's Email" required>
+				</div>
+				<div class="mb-3">
+					<label for="name" class="form-label">Customer Username</label>
+					<input type="text" class="form-control" id="username" name="username"
+						placeholder="Enter Customer's Username" required>
+				</div>
+				<div class="mb-3">
+					<label for="name" class="form-label">Customer Password</label>
+					<input type="password" class="form-control" id="password" name="password"
+						placeholder="Enter Customer's Password" required>
+				</div>
+				<button type="submit" class="btn btn-primary">Add Customer</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

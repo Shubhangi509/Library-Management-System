@@ -1,0 +1,55 @@
+{%extends "/shared/admin_layout.html" %}
+
+{% block title %}Admin Home{% endblock %}
+
+{% block head %}
+	{{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+	<div class="row justify-content-center align-self-center">
+		<div class="w-100 mt-1 mb-3">		
+			<form action="/admin/books/search" method="POST">
+				<div class="row">
+					<div class="col-md-10 m-0">
+						<div class="form-floating">
+							<input type="search" name="keyword" autofocus class="form-control shadow" id="keyword" value="{{keyword}}" placeholder="Search for books..." required>
+							<label for="keyword">Search for books</label>
+							<small class="form-text text-muted">Available books will be shown to members.</small>
+						</div>							
+					</div>
+					<div class="col-6 col-md-2 d-grid" style="margin-bottom: 25px;" >						
+						<button type="submit" class="btn btn-primary btn-lg shadow">Search</button>
+					</div>
+				</div>		
+			</form>
+			
+			{% if searchList %}
+			<h5 class="mt-3">Result</h5>
+			<div class="row row-cols-4">
+				{% for book in searchList %}
+				<div class="col pb-2">
+					<div class="card">                    
+						<div class="card-body">
+						  <h5 class="card-title d-flex justify-content-between">{{book.name}}</h5>
+						  <h6 class="card-subtitle mb-2 text-body-secondary">~{{book.author}}</h6>
+						  <p class="card-text">{{book.about}}</p>						  
+						  <a href="/admin/books/{{book._id}}" class="card-link"><i class="bi bi-eye"></i> Details</a>
+						</div>
+					</div>
+				</div>  
+				{% endfor %}                        
+			</div>
+			{% elif error %}
+			<div class=" mt-2 alert alert-danger alert-dismissible fade show" role="alert">
+				{{error}}
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+			{% endif %}	
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+

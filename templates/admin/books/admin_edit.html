@@ -1,0 +1,60 @@
+{%extends "/shared/admin_layout.html" %}
+
+{% block title %}Edit Book{% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+	{% if error %}
+	<div class="alert alert-danger alert-dismissible fade show" role="alert">
+		{{error}}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	{% endif %}
+	{% if msg %}
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+		{{msg}}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	{% endif %}
+	{% if book %}
+	<div class="card">
+		<div class="card-body">
+			<form action="/admin/books/edit/{{book._id}}" method="POST">
+				<div class="mb-3">
+					<label for="name" class="form-label">Book Name</label>
+					<input type="text" class="form-control" id="name" name="name" placeholder="Enter Book name"
+						value="{{book.name}}" required>
+				</div>
+				<div class="mb-3">
+					<label for="author" class="form-label">Author Name</label>
+					<input type="text" class="form-control" id="author" name="author" placeholder="Enter Author name"
+						value="{{book.author}}" required>
+				</div>
+				<div class="mb-3">
+					<label for="about" class="form-label">Book Description</label>
+					<textarea class="form-control" id="about" name="about" rows="2" placeholder="Enter Book description"
+						required>{{book.about}}</textarea>
+				</div>
+				<div class="mb-3">
+					<label for="tags" class="form-label">Tags</label>
+					<div class="tags-input">
+						<input type="text" class="form-control" id="tags" name="tags"
+							placeholder="Enter tags separated by comma" value="{{book.tags|join(',')}}" required>
+					</div>
+				</div>
+				<div class="mb-3">
+					<label for="author" class="form-label">Total Book Count</label>
+					<input type="number" class="form-control" id="total_copy" name="total_copy"
+						placeholder="Enter total nomber of Books" value={{book.total_copy}} required>
+				</div>
+				<button type="submit" class="btn btn-primary">Update Book</button>
+			</form>
+		</div>
+	</div>
+	{% endif %}
+</div>
+{% endblock %}

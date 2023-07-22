@@ -1,0 +1,40 @@
+{%extends "/shared/layout.html" %}
+
+{% block title %}Book{% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+	{% if error %}
+	<div class="alert alert-danger alert-dismissible fade show" role="alert">
+		{{error}}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	{% endif %}
+	{% if book %}
+	<div class="card">
+		<div class="card-body">
+			<h5 class="card-title">Book: {{book.name}}</h5>
+			<h6 class="card-subtitle mb-2 text-body-secondary">Author: {{book.author}}</h6>
+			<p class="card-text">
+				Description: {{book.about}}
+			</p>
+			<p class="card-text">
+				Tags: {{book.tags | join(', ')}}
+			</p>
+			<p class="card-text">Total Books: <span class="badge text-bg-primary">{{book.total_copy}}</span></p>
+			<p class="card-text">Issues Books: <span class="badge text-bg-warning">{{book.issued_copy}}</span></p>
+			<p class="card-text">Available Books: <span class="badge text-bg-success">{{book.present_copy}}</span></p>
+		</div>
+		<!--<div class="card-footer">
+				<a href="/customer/books/add/{{book._id}}" class="card-link"><i class="bi bi-plus"></i> Add</a>
+			</div>-->
+	</div>
+	{% endif %}
+
+</div>
+
+{% endblock %}

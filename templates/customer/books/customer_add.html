@@ -1,0 +1,79 @@
+{%extends "/shared/layout.html" %}
+
+{% block title %}Add Book{% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+	{% if error %}
+	<div class="alert alert-danger alert-dismissible fade show" role="alert">
+		{{error}}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	{% endif %}
+	{% if msg %}
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+		{{msg}}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	{% endif %}
+	<h4 class="mb-3">List of Books</h4>
+	<div class="row row-cols-4">
+		{% for book in books %}
+		<div class="col pb-2">
+			<div class="card" style="min-height: 250px; max-height: 300px;">
+				<div class="card-body">
+					<h5 class="card-title">{{book.name}}</h5>
+					<h6 class="card-subtitle mb-2 text-body-secondary">~{{book.author}}</h6>
+					<p class="card-text overflow-description">{{book.about}}</p>
+				</div>
+				<div class="card-footer d-flex justify-content-between">
+					{% if book.isIssued == 1 %}
+					<a href="#" id="removeButton" data-link="/customer/books/remove/{{book.issueId}}" class="card-link">
+						<i class="bi bi-bookmark-dash-fill"></i> Return Book
+					</a>
+					{% else %}
+					<a href="#" id="addButton" data-link="/customer/books/add/{{book._id}}" class="card-link">
+						<i class="bi bi-bookmark-plus-fill"></i> Issue Book
+					</a>
+					{% endif %}
+					<a href="/customer/books/{{book._id}}" class="card-link"><i class="bi bi-eye"></i> Details</a>
+
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+
+<script>
+	$("#addButton").click(function () {
+		debugger;
+		var url = $(this).data("link");
+
+		var form = $("<form>", {
+			method: "POST",
+			action: url
+		});
+
+		$(document.body).append(form);
+		form.submit();
+	});
+
+	$(document).on("click", "#removeButton", function () {
+		debugger;
+		var url = $(this).data("link");
+
+		var form = $("<form>", {
+			method: "POST",
+			action: url
+		});
+
+		$(document.body).append(form);
+		form.submit();
+	});
+</script>
+{% endblock %}
